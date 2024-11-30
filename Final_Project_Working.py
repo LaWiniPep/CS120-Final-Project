@@ -1,5 +1,5 @@
 import pygame, simpleGE
-from player import Player, LblOutput
+from player_working import Player, LblOutput
 
 """ tileScroll.py
     demonstrate basic tbw 
@@ -13,14 +13,22 @@ class Tile(simpleGE.Sprite):
         self.images = [
             pygame.image.load("Grass32.png"),
             pygame.image.load("Path.png"),
-            pygame.image.load("Water.png")]
+            pygame.image.load("Water.png"),
+            pygame.image.load("Door.png"),
+            pygame.image.load("Edge.png"),
+            pygame.image.load("CaveDoor.png"),
+            pygame.image.load("Stairs.png")]
         
-        self.stateName = ["grass", "path", "water"]
+        self.stateName = ["grass", "path", "water", "door", "edge", "cave door", "stairs"]
         
         self.setSize(32, 32)
         self.GRASS = 0
         self.DIRT = 1
         self.WATER = 2
+        self.DOOR = 3
+        self.edge = 4
+        self.CAVEDOOR = 5
+        self.STAIRS = 6
         self.state = self.GRASS
     
     def setState(self, state):
@@ -51,7 +59,7 @@ class Game(simpleGE.Scene):
         self.setCaption("The Legend of Alex")
         self.tileset = []
         
-        self.ROWS = 20
+        self.ROWS = 30
         self.COLS = 40
         
         self.SCREEN_ROWS = 15
@@ -68,43 +76,141 @@ class Game(simpleGE.Scene):
         self.sprites = [self.tileset, self.player, self.lblOutput]
         
     def loadMap(self):
+        self.map = [
+            [4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],
+            [4,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4],
+            [4,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4],
+            [4,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4],
+            [4,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4],
+            [4,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4],
+            [4,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,4],
+            [4,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,4],
+            [4,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,4],
+            [4,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1],
+            [4,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,4],
+            [4,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,4],
+            [4,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,4],
+            [4,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,4],
+            [4,4,4,4,4,4,4,4,4,1,4,4,4,4,4,4,4,4,4,4]
+]
         
-      self.map = [
-          
-          [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],  
-          [1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],  
-          [0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],  
-          [0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],  
-          [0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],  
-          [0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],  
-          [2,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,2,2,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],  
-          [2,2,2,2,2,2,0,0,0,0,1,0,0,0,0,0,2,2,2,2,2,0,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],  
-          [0,2,2,2,2,2,2,0,0,0,1,0,0,0,2,2,2,2,2,0,0,0,0,0,2,2,0,0,1,1,1,1,1,0,0,0,0,0,0,0],  
-          [0,0,0,0,0,0,2,2,2,2,1,2,2,2,2,2,0,0,0,0,0,0,0,0,0,2,2,2,2,2,2,2,2,1,1,1,0,0,0,0],  
-          [0,0,0,0,0,0,0,2,2,2,1,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,2,2,2,2,2,2,2,2,2,2,1,0,0,0],  
-          [0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,2,2,2,1,0,0,0],  
-          [0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,1,1,1,2,2,1,1,1],  
-          [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,1,2,2,2,2,2,2,2],  
-          [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,2,2,2,2,2,2,2,2],  
-          [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,2,2,2,2,2,2,2],  
-          [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,2,2,2,2,2,2,2,2],  
-          [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,2,2,2,2,2,2,2,2,2],  
-          [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,2,2,2,2,2,2,2,2,2,2],  
-          [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2]
-      ]
-    
-      for row in range(self.SCREEN_ROWS):
-          self.tileset.append([])
-          for col in range(self.SCREEN_COLS):
-            currentVal = self.map[row][col]
-            newTile = Tile(self)
-            newTile.setState(currentVal)
-            newTile.tilePos = (row,col)
-            xPos = 16 + (32 * col)
-            yPos = 16 + (32 * row)
-            newTile.x = xPos
-            newTile.y = yPos
-            self.tileset[row].append(newTile)
+        for row in range(self.SCREEN_ROWS):
+            self.tileset.append([])
+            for col in range(self.SCREEN_COLS):
+                currentVal = self.map[row][col]
+                newTile = Tile(self)
+                newTile.setState(currentVal)
+                newTile.tilePos = (row,col)
+                xPos = 16 + (32 * col)
+                yPos = 16 + (32 * row)
+                newTile.x = xPos
+                newTile.y = yPos
+                self.tileset[row].append(newTile)
+                
+        self.map1 = [
+            [4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],
+            [4,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4],
+            [4,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4],
+            [4,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4],
+            [4,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4],
+            [4,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4],
+            [4,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,4],
+            [4,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,4],
+            [4,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,4],
+            [4,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1],
+            [4,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,4],
+            [4,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,4],
+            [4,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,4],
+            [4,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,4],
+            [4,4,4,4,4,4,4,4,4,1,4,4,4,4,4,4,4,4,4,4]
+]
+        self.map2 = [
+            [4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],
+            [4,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,4],
+            [4,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,4],
+            [4,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,4],
+            [4,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,4],
+            [4,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,4],
+            [4,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,4],
+            [4,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,4],
+            [4,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,4],
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,4],
+            [4,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,4],
+            [4,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,4],
+            [4,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,4],
+            [4,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,4],
+            [4,4,4,4,4,4,4,4,4,4,1,4,4,4,4,4,4,4,4,4]
+]
+        self.map3 = [
+            [4,4,4,4,4,4,4,4,4,1,4,4,4,4,4,4,4,4,4,4],  
+            [4,0,2,2,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,4],  
+            [4,0,2,2,0,0,0,0,0,1,1,1,1,1,1,1,1,0,0,4],  
+            [4,0,2,2,0,0,0,0,0,1,1,0,0,0,0,0,1,0,0,4],  
+            [4,0,2,2,0,0,0,0,0,1,1,0,0,0,0,0,1,1,1,1],  
+            [4,0,2,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,4],
+            [4,0,2,1,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,4],  
+            [4,0,2,2,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,4],  
+            [4,0,2,0,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0,4],  
+            [4,0,2,0,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0,4],  
+            [4,0,2,2,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,4],  
+            [4,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4],
+            [4,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],  
+            [4,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
+            [4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4]
+]
+        self.map4 = [
+            [4,4,4,4,4,4,4,4,4,4,1,4,4,4,4,4,4,4,4,4],  
+            [4,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,4],  
+            [4,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,4],  
+            [4,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,4],  
+            [1,1,1,1,0,1,1,1,0,0,0,1,0,0,0,0,0,0,0,4],  
+            [4,0,1,1,1,1,1,1,0,0,0,1,0,0,0,0,0,0,0,4],
+            [4,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,2,2,0,4],  
+            [4,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,2,2,0,4],  
+            [4,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,2,2,0,4],  
+            [4,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,5,2,0,4],  
+            [4,0,0,2,2,2,0,0,0,0,0,0,0,0,0,0,2,2,0,4],  
+            [4,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4],
+            [2,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4],  
+            [2,2,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4],
+            [4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4]
+]
+        self.village = [
+            [4,4,4,4,4,4,4,4,4,6,4,4,4,4,4,4,4,4,4,4],
+            [4,2,2,2,2,2,2,2,2,1,2,2,2,2,2,2,2,2,2,4],
+            [4,2,2,2,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,4],
+            [4,2,2,2,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,4],
+            [4,2,2,2,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,4],
+            [4,2,2,2,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,4],
+            [4,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4],
+            [4,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4],
+            [4,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4],
+            [4,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4],
+            [4,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4],
+            [4,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4],
+            [4,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4],
+            [4,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4],
+            [4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4]
+]
+        self.cave = [
+            [4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],
+            [4,1,6,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4],
+            [4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4],
+            [4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4],
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4],
+            [4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4],
+            [4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4],
+            [4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4],
+            [4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4],
+            [4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4],
+            [4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4],
+            [4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4],
+            [4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4],
+            [4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4],
+            [4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4]
+]
+
+            
             
     def showMap(self):
         """ shows a subset of the map SCREEN_ROWS by SCREENCOLS
@@ -114,12 +220,125 @@ class Game(simpleGE.Scene):
             for col in range(self.SCREEN_COLS):
                 currentVal = self.map[row + self.offRow][col + self.offCol]
                 self.tileset[row][col].setState(currentVal)
-                
-#     def process(self):
+#     def process (self):
+#         if self.stateName == "door":
+#             position = self.player.position
+#             self.player.colorRect ("white", (20, 20))
+#             self.player.position = position
+#         else:
+#             position = self.player.position
+#             self.player.colorRect("red", (20, 20))
+#             self.player.position = position
+    def process(self):
+        #TopL to BottomL
+        if self.player.tileOver == (14,9) and self.map == self.map1:
+            position = self.player.position
+            self.player.colorRect("white", (20, 20))
+            self.player.position = position
+            self.map = self.map3
+            self.player.position = (300, 35)
+        #BottomL to TopL    
+        elif self.player.tileOver == (0,9) and self.map == self.map3:
+            position = self.player.position
+            self.player.colorRect("white", (20, 20))
+            self.player.position = position
+            self.map = self.map1
+            self.player.position = (300, 435)
+            
+        #TopL to TopR    
+        elif self.player.tileOver == (9,19) and self.map == self.map1:
+            position = self.player.position
+            self.player.colorRect("white", (20, 20))
+            self.player.psoition = position
+            self.map = self.map2
+            self.player.position = (35,300)
+            
+        #TopR to TopL    
+        elif self.player.tileOver == (9,0) and self.map == self.map2:
+            position = self.player.position
+            self.player.colorRect("white", (20, 20))
+            self.player.position = position
+            self.map = self.map1
+            self.player.position = (590, 300)
+            
+        #BottomL to Bottom R    
+        elif self.player.tileOver == (4,19) and self.map == self.map3:
+            position = self.player.position
+            self.player.colorRect("white", (20, 20))
+            self.player.position = position
+            self.map = self.map4
+            self.player.position = (35, 145)
+        
+        #BottomR to BottomL
+        elif self.player.tileOver == (4,0) and self.map == self.map4:
+            position = self.player.position
+            self.player.colorRect("white", (20, 20))
+            self.player.position = position
+            self.map = self.map3
+            self.player.position = (590, 145)
+            
+        #BottomR to TopR
+        elif self.player.tileOver == (0,10) and self.map == self.map4:
+            position = self.player.position
+            self.player.colorRect("white", (20, 20))
+            self.player.position = position
+            self.map = self.map2
+            self.player.position = (330, 435)
+            
+        #TopR to BottomR
+        elif self.player.tileOver == (14,10) and self.map == self.map2:
+            position = self.player.position
+            self.player.colorRect("white", (20, 20))
+            self.player.position = position
+            self.map = self.map4
+            self.player.position = (330, 35)
+            
+        #Door on map1
+        elif self.player.tileOver == (1,2) and self.map == self.map1:
+            position = self.player.position
+            self.player.colorRect("white", (20, 20))
+            self.player.position = position
+            self.map = self.village
+            self.player.position = (250, 155)
+            
+        #Exit Village
+        elif self.player.tileOver == (0,9) and self.map == self.village:
+            position = self.player.position
+            self.player.colorRect("white", (20, 20))
+            self.player.position = position
+            self.map = self.map1
+            self.player.position = (80, 75)
+            
+        #Dungeon
+        elif self.player.tileOver == (9,16) and self.map == self.map4:
+            position = self.player.position
+            self.player.colorRect("white", (20, 20))
+            self.player.position = position
+            self.map = self.cave
+            self.player.position = (80, 75)
+        
+        #Exit Cave
+        elif self.player.tileOver == (1,2) and self.map == self.cave:
+            position = self.player.position
+            self.player.colorRect("white", (20, 20))
+            self.player.position = position
+            self.map = self.map4
+            self.player.position = (500, 300)
+            
+        
+#             
+        else:
+            position = self.player.position
+            self.player.colorRect("red", (20,20))
+            self.player.position = position
+#         if self.player.tileOver == (14,9):
+#                 self.offRow -= 5
+            
 #         if self.isKeyPressed(pygame.K_a):
-#             if self.offCol > 0:
+#             if self.offCol  > 0:
 #                 self.offCol -= 1
-#                 
+#         
+#         
 #         if self.isKeyPressed(pygame.K_d):
 #             if self.offCol < self.COLS - self.SCREEN_COLS:
 #                 self.offCol += 1
@@ -137,7 +356,6 @@ class Game(simpleGE.Scene):
 def main():
     game = Game()
     game.start()
-
     
 if __name__ == "__main__":
     main()
