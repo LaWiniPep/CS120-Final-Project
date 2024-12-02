@@ -19,38 +19,44 @@ class Player(simpleGE.Sprite):
         
     def process(self):
         
+#         self.correction = (0, 0)
+        self.move = False
         if self.isKeyPressed(pygame.K_UP):
             self.y -= self.moveSpeed
+            self.move = True
+#             if self.state == self.edge:
+#                 self.correction = self.y + self.moveSpeed
+            
         if self.isKeyPressed(pygame.K_DOWN):
             self.y += self.moveSpeed
+            self.move = True
+#             if self.scene.state == self.scene.edge:
+#                 self.correction = self.y - self.moveSpeed
+            
         if self.isKeyPressed(pygame.K_LEFT):
             self.x -= self.moveSpeed
+            self.move = True
+#             if self.scene.state == self.scene.edge:
+#                 self.correction = self.x + self.moveSpeed
+            
         if self.isKeyPressed(pygame.K_RIGHT):
             self.x += self.moveSpeed
-            
-        #Our Target to go to
-#         if self.tileOver == (2,2) or self.tileOver == (14,9) or self.tileOver == (9,19):
-#             position = self.position
-#             self.colorRect("white", (20, 20))
-#             self.position = position
-#         elif self.tileOver == (12,12):
-#             position = self.position
-#             self.colorRect("white", (20, 20))
-#             self.postion = position
-#         else:
-#             position = self.position
-#             self.colorRect("red", (20,20))
-#             self.position = position
-            
-        
+            self.move = True
+#             if self.scene.state == self.scene.edge:
+#                 self.correction = self.x - self.moveSpeed
+                
+#         barrier = self.scene.barrier
+#         if self.collidesWith(barrier):
+#             self.x += self.correction
+#             self.y += self.correction    
             
         #Speed on different tiles
-#         if self.tileState == 0:
-#             self.moveSpeed = 1
-#         elif self.tileState == 1:
-#             self.moveSpeed = 2
-#         elif self.tileState == 2:
-#             self.moveSpeed = .2
-#         else:
-#             self.moveSpeed = .5
+        if self.tileState == 0:
+            self.moveSpeed = 1.5
+        elif self.tileState == 1:
+            self.moveSpeed = 3
+        elif self.tileState == 2:
+            self.moveSpeed = .2
+        else:
+            self.moveSpeed = 2
 #             

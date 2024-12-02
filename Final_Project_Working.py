@@ -17,9 +17,11 @@ class Tile(simpleGE.Sprite):
             pygame.image.load("Door.png"),
             pygame.image.load("Edge.png"),
             pygame.image.load("CaveDoor.png"),
-            pygame.image.load("Stairs.png")]
+            pygame.image.load("Stairs.png"),
+            pygame.image.load("intDungeonDoorW.png"),
+            pygame.image.load("intDungeonDoorE.png")]
         
-        self.stateName = ["grass", "path", "water", "door", "edge", "cave door", "stairs"]
+        self.stateName = ["grass", "path", "water", "door", "edge", "cave door", "stairs", "Dun doorW", "Dun DoorE"]
         
         self.setSize(32, 32)
         self.GRASS = 0
@@ -29,7 +31,10 @@ class Tile(simpleGE.Sprite):
         self.edge = 4
         self.CAVEDOOR = 5
         self.STAIRS = 6
+        self.INTDUNGEONDOORW = 7
+        self.INTDUNGEONDOORE = 8
         self.state = self.GRASS
+        
     
     def setState(self, state):
         self.state = state
@@ -52,7 +57,21 @@ class Tile(simpleGE.Sprite):
             rowCol = f"{self.tilePos[0]}, {self.tilePos[1]}"
             
             self.scene.lblOutput.text = f"{stateInfo} {rowCol}"
+        
+        #Collide with edge
+#         if self.collidesWith(self.scene.player):
+#             self.scene.player.tileOver = self.tilePos
+#             self.scene.player.tileState = self.state
             
+#             else:
+#                 self.scene.player.moveSpeed = self.scene.player.moveSpeed
+                
+                
+                
+                
+                
+                
+        
 class Game(simpleGE.Scene):
     def __init__(self):
         super().__init__()
@@ -107,6 +126,7 @@ class Game(simpleGE.Scene):
                 newTile.y = yPos
                 self.tileset[row].append(newTile)
                 
+        
         self.map1 = [
             [4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],
             [4,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4],
@@ -193,11 +213,29 @@ class Game(simpleGE.Scene):
             [4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4]
 ]
         self.cave = [
+            [4,4,6,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],
+            [4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4],
+            [4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4],
+            [4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4],
+            [7,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4],
+            [4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4],
+            [4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4],
+            [4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4],
+            [4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4],
+            [4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4],
+            [4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4],
+            [4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4],
+            [4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4],
+            [4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4],
+            [4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4]
+]
+        
+        self.caveRoom = [
             [4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],
-            [4,1,6,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4],
             [4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4],
             [4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4],
-            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4],
+            [4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4],
+            [4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,8],
             [4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4],
             [4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4],
             [4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4],
@@ -318,13 +356,29 @@ class Game(simpleGE.Scene):
             self.player.position = (80, 75)
         
         #Exit Cave
-        elif self.player.tileOver == (1,2) and self.map == self.cave:
+        elif self.player.tileOver == (0,2) and self.map == self.cave:
             position = self.player.position
             self.player.colorRect("white", (20, 20))
             self.player.position = position
             self.map = self.map4
             self.player.position = (500, 300)
             
+        #Cave Room
+        elif self.player.tileOver == (4,0) and self.map == self.cave:
+            position = self.player.position
+            self.player.colorRect("white", (20, 20))
+            self.player.position = position
+            self.map = self.caveRoom
+            self.player.position = (595, 145)
+            
+        #Exit Cave Room
+        elif self.player.tileOver == (4,19) and self.map == self.caveRoom:
+            position = self.player.position
+            self.player.colorRect("white", (20, 20))
+            self.player.position = position
+            self.map = self.cave
+            self.player.position = (45, 145) 
+        
         
 #             
         else:
