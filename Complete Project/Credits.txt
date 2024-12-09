@@ -1,0 +1,82 @@
+UNIVERSAL LPC SPRITE GENERATOR
+
+Authors: bluecarrot16, Benjamin K. Smith (BenCreating), Evert, Eliza Wyatt (ElizaWy), TheraHedwig, MuffinElZangano, Durrani, Johannes Sj?lund (wulax), Stephen Challener (Redshrike), Nila122, ElizaWy, JaidynReiman, Thane Brimhall (pennomi), Matthew Krohn (makrohn), Johannes Sjölund (wulax), Matthew Krohn (Makrohn), Michael Whitlock (bigbeargames), Daniel Eddeland (daneeklu), gr3yh47
+
+- body/bodies/male/green.png: by bluecarrot16, Benjamin K. Smith (BenCreating), Evert, Eliza Wyatt (ElizaWy), TheraHedwig, MuffinElZangano, Durrani, Johannes Sj?lund (wulax), Stephen Challener (Redshrike). License(s): CC-BY-SA 3.0, GPL 3.0. see details at https://opengameart.org/content/lpc-character-bases; 'Thick' Male Revised Run/Climb by JaidynReiman (based on ElizaWy's LPC Revised)
+    - https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles
+    - https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
+    - https://opengameart.org/content/lpc-male-jumping-animation-by-durrani
+    - https://opengameart.org/content/lpc-runcycle-and-diagonal-walkcycle
+    - https://opengameart.org/content/lpc-revised-character-basics
+
+- body/wings/lizard/adult/fg/green.png: by Nila122, bluecarrot16. License(s): OGA-BY 3.0, CC-BY-SA 3.0, GPL 3.0. edited for v3 bases and recolored by bluecarrot16
+    - https://opengameart.org/content/drakes-and-lizardfolk
+
+- body/wings/lizard/adult/bg/green.png: by Nila122, bluecarrot16. License(s): OGA-BY 3.0, CC-BY-SA 3.0, GPL 3.0. edited for v3 bases and recolored by bluecarrot16
+    - https://opengameart.org/content/drakes-and-lizardfolk
+
+- head/heads/human/male_small/green.png: by ElizaWy, Stephen Challener (Redshrike). License(s): OGA-BY 3.0, CC-BY. original head by Redshrike; reduced size head by ElizaWy
+
+- head/ears/elven/adult/green.png: by JaidynReiman, bluecarrot16, Thane Brimhall (pennomi), Matthew Krohn (makrohn), JaidynReiman. License(s): GPL 3.0, CC-BY-SA 3.0. adapted to v3 base by bluecarrot16; expanded to other animations and child by JaidynReiman
+    - https://opengameart.org/content/lpc-base-character-expressions
+    - http://opengameart.org/content/lpc-clothing-updates
+
+- hair/afro/male/strawberry.png: by bluecarrot16. License(s): CC0. 
+    - https://opengameart.org/content/lpc-hair
+
+- hat/cloth/feather_cap/adult/forest.png: by Johannes Sjölund (wulax), Matthew Krohn (Makrohn), JaidynReiman. License(s): OGA-BY 3.0, CC-BY-SA 3.0, GPL 3.0. original by Johannes Sjölund (wulax), female by Matthew Krohn, mapped to all frames w/recolors by JaidynReiman
+    - https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
+
+- shoulders/plate/male/copper.png: by bluecarrot16, Johannes Sjölund (wulax). License(s): CC-BY-SA 3.0, GPL 3.0. 
+    - https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
+    - http://opengameart.org/content/lpc-clothing-updates
+
+- torso/clothes/longsleeve/laced/male/navy.png: by bluecarrot16, JaidynReiman, Johannes Sjölund (wulax). License(s): CC-BY-SA 3.0, GPL 3.0. 
+    - https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
+    - https://opengameart.org/content/lpc-pirates
+
+- torso/armour/plate/male/copper.png: by JaidynReiman, bluecarrot16, Michael Whitlock (bigbeargames), Johannes Sjölund (wulax). License(s): OGA-BY 3.0, CC-BY-SA 3.0, GPL 3.0. original by wulax; recolor by bigbeargames; color reduced to 7 colors and adapted to v3 bases by bluecarrot16; run/jump/sit/climb/revised combat by JaidynReiman
+    - https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
+    - https://opengameart.org/content/lpc-combat-armor-for-women
+
+- legs/pantaloons/male/blue.png: by Nila122, Johannes Sjölund (wulax), Stephen Challener (Redshrike). License(s): OGA-BY 3.0, CC-BY-SA 3.0,, GPL 2.0, GPL 3.0. 
+    - https://opengameart.org/content/lpc-pirates
+    - https://opengameart.org/content/more-lpc-clothes-and-hair
+
+- feet/boots_fold/universal/male/blue.png: by JaidynReiman. License(s): OGA-BY 3.0+, CC-BY 3.0+, GPL 3.0. 
+    - https://opengameart.org/content/lpc-relm-outfit-pieces-2-kimonos-2-sleeves-2-boots-tabi-socks
+
+- weapon/sword/saber/saber.png: by Daniel Eddeland (daneeklu), Johannes Sjölund (wulax), gr3yh47, bluecarrot16. License(s): CC-BY-SA 3.0. 
+    - https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
+    - https://opengameart.org/content/lpc-extended-weapon-animations
+
+- weapon/sword/saber/universal_behind/saber.png: by Daniel Eddeland (daneeklu), Johannes Sjölund (wulax), gr3yh47, bluecarrot16. License(s): CC-BY-SA 3.0. 
+    - https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
+    - https://opengameart.org/content/lpc-extended-weapon-animations
+
+- weapon/sword/saber/attack_slash/behind/saber.png: by Daniel Eddeland (daneeklu), Johannes Sjölund (wulax), gr3yh47, bluecarrot16. License(s): CC-BY-SA 3.0. 
+    - https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
+    - https://opengameart.org/content/lpc-extended-weapon-animations
+
+- weapon/sword/saber/attack_slash/saber.png: by Daniel Eddeland (daneeklu), Johannes Sjölund (wulax), gr3yh47, bluecarrot16. License(s): CC-BY-SA 3.0. 
+    - https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
+    - https://opengameart.org/content/lpc-extended-weapon-animations
+
+TILES
+
+Created in Gimp - Edits Alex Muller
+
+Files From Open Game Art
+ - ArMM1998 For the Grass, Water, Door, Edge files
+https://opengameart.org/content/zelda-like-tilesets-and-sprites
+
+ - Sprite for Alex - Kenney on OpenGameArt
+https://opengameart.org/content/platformer-art-deluxe
+
+ - Bomb - Chrisblue
+https://opengameart.org/content/bombs
+
+Image from Instruction Screen
+Coraline Muller Photo taken in Olympic National Park
+
+
